@@ -171,7 +171,7 @@ RECETAS = {
     "Ensalada de mango": {
         "ingredientes": ["Mango", "Tomates", "Cebolla", "Aguacates"],
         "tiempo": 15,
-        "imagen": "emailada_mango.jpg",  # Cambiado: imagen en directorio raíz
+        "imagen": "ensalada_mango.jpg",  # Cambiado: imagen en directorio raíz
         "preparacion": [
             "Lavar, pelar y cortar los ingredientes",
             "Mezclar todos los ingredientes en un bol",
