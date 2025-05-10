@@ -35,21 +35,30 @@ st.markdown("""
 
 st.markdown("""
     <style>
+    /* Estilos base y configuración de página */
     .block-container {
         max-width: 800px;
         text-align: center;
     }
+    
+    /* Ocultar elementos de Streamlit */
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+    .stDeployButton {display: none;}
+    .st-emotion-cache-zq5wmm {visibility: hidden;}
 
-    /*No me esta cogiendo el formato polaroid, pero me gusta la etiqueta con el nombre que añade*/
+    /* Estilo Polaroid */
     .polaroid-frame { 
         background: white;
         padding: 15px 15px 40px 15px;
         box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         transform: rotate(-2deg);
         transition: all 0.3s ease;
-        max-width: 450px;
+        max-width: 90%;
         width: 100%;
         text-align: center;
+        margin: 0 auto;
     }
     .polaroid-frame:hover {
         transform: rotate(0deg) scale(1.02);
@@ -57,7 +66,7 @@ st.markdown("""
     }
     .polaroid-image-wrapper {
         width: 100%;
-        height: 300px;
+        height: auto;
         overflow: hidden;
         display: flex;
         align-items: center;
@@ -78,80 +87,146 @@ st.markdown("""
         margin-top: 15px;
         padding: 0 10px;
     }
+    
     /* Estilos para los recuadros */
     .recipe-box {
         background: white;
         border-radius: 10px;
-        padding: 20px;
+        padding: 15px;
         margin: 20px auto;
         box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        width: 100%;
         max-width: 700px;
+        box-sizing: border-box;
+        overflow: hidden;
     }
+    
+    /* Caja de tiempo */
     .time-box {
         text-align: center;
         background-color: #f0f7ff;
         border-left: 5px solid #4a8cff;
     }
+    
+    /* Caja de ingredientes */
     .ingredients-box {
         text-align: center;
         background-color: #f5fff0;
         border-left: 5px solid #6a9a1b;
     }
     .ingredients-box ul {
-        display: inline-block;
-        text-align: left; 
+        display: block;
+        text-align: left;
         margin: 0 auto;
         padding-left: 20px;
-        width: 90%; 
+        width: 100%;
+        box-sizing: border-box;
+        list-style-position: outside;
     }
     .ingredients-box li {
+        margin-bottom: 5px;
+        padding-left: 5px;
         text-align: left;
-        list-style-position: outside; 
-        margin-left: 1em;
     }
-    .ingredients-box h3 {
-        text-align: center; 
-        margin: 0 auto 1rem auto;
-    }
+    
+    /* Caja de pasos */
     .steps-box {
         text-align: center;
         background-color: #fff5f0;
         border-left: 5px solid #ff8c4a;
     }
     .steps-box ol {
-        display: inline-block;
-        text-align: left; 
+        display: block;
+        text-align: left;
         margin: 0 auto;
         padding-left: 20px;
-        width: 90%; 
+        width: 100%;
+        box-sizing: border-box;
+        list-style-position: outside;
     }
     .steps-box li {
+        margin-bottom: 8px;
+        padding-left: 5px;
         text-align: left;
-        list-style-position: outside; 
-        margin-left: 1em;
     }
-    .steps-box h3 {
-        text-align: center; 
+    
+    /* Títulos dentro de los recuadros */
+    .recipe-box h3 {
+        text-align: center;
         margin: 0 auto 1rem auto;
     }
-    /* Centrado completo de listas */
-    .ingredients-box ul, .steps-box ol {
-        display: inline-block;
-        text-align: left;
-        padding-left: 20px;
-        margin: 0 auto;
-    }
-    /* Alineación de viñetas/números con el texto */
-    .ingredients-box li, .steps-box li {
-        text-align: left;
-        list-style-position: inside;
-        padding-left: 0;
-    }
+    
+    /* Elementos de selección y slider */
     .stMultiSelect, .stSlider {
         margin: 0 auto !important;
-        max-width: 500px;
+        max-width: 100%;
     }
-    </style>
+    
+    /* Imágenes responsive */
+    div[data-testid="stImage"] {
+        margin: -50px auto 0 auto !important;
+        max-width: 90% !important;
+        border: 1px solid #eee !important;
+        padding: 10px !important;
+        background: white !important;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1) !important;
+    }
+    div[data-testid="stImage"] > img {
+        max-height: 300px !important;
+        width: 100%;
+        object-fit: cover !important;
+    }
+    
+    /* Media queries para responsive design */
+    @media (max-width: 768px) {
+        .recipe-box {
+            padding: 10px;
+            margin: 15px auto;
+        }
+        
+        .polaroid-frame {
+            padding: 10px 10px 30px 10px;
+        }
+        
+        .polaroid-caption {
+            font-size: 1.2em;
+        }
+        
+        .ingredients-box ul, .steps-box ol {
+            padding-left: 15px;
+            display: block;
+            width: 90%;
+        }
+        
+        .ingredients-box li, .steps-box li {
+            margin-bottom: 5px;
+        }
+        
+        div[data-testid="stImage"] {
+            margin: -40px auto 0 auto !important;
+        }
+        
+        div[data-testid="stImage"] > img {
+            max-height: 200px !important;
+        }
+    }
+    
+    /* Media queries para pantallas muy pequeñas */
+    @media (max-width: 480px) {
+        .recipe-box {
+            padding: 8px;
+        }
+        
+        h3 {
+            font-size: 1.1em;
+        }
+        
+        .ingredients-box ul, .steps-box ol {
+            padding-left: 12px;
+            width: 95%;
+        }
+    }
+</style>
 """, unsafe_allow_html=True)
 
 # --- DATOS DE RECETAS --------------------------------------------------------------------------
