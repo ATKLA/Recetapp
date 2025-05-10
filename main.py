@@ -39,7 +39,7 @@ st.markdown("""
         max-width: 800px;
         text-align: center;
     }
-    
+
     /*No me esta cogiendo el formato polaroid, pero me gusta la etiqueta con el nombre que añade*/
     .polaroid-frame { 
         background: white;
@@ -159,7 +159,7 @@ RECETAS = {
     "Revuelto de tofu": {
         "ingredientes": ["Huevos", "Cebolla", "Tofu", "Jengibre"],
         "tiempo": 20,
-        "imagen": os.path.join("images/revuelto_tofu.jpg"),
+        "imagen": "revuelto_tofu.jpg",  # Cambiado: imagen en directorio raíz
         "preparacion": [
             "Secar el tofu y desmenuzarlo en un bol",
             "Salpimentar el tofu y añadir especias al gusto",
@@ -171,7 +171,7 @@ RECETAS = {
     "Ensalada de mango": {
         "ingredientes": ["Mango", "Tomates", "Cebolla", "Aguacates"],
         "tiempo": 15,
-        "imagen": os.path.join("images/ensalada_mango.jpg"),
+        "imagen": "emailada_mango.jpg",  # Cambiado: imagen en directorio raíz
         "preparacion": [
             "Lavar, pelar y cortar los ingredientes",
             "Mezclar todos los ingredientes en un bol",
@@ -181,7 +181,7 @@ RECETAS = {
     "Tosta de salmón picantón": {
         "ingredientes": ["Salmón ahumado", "Queso Cottage", "Wasabi", "Aguacates", "Salsa de soja"],
         "tiempo": 10,
-        "imagen": os.path.join("images/tosta_salmon.jpg"),
+        "imagen": "tosta_salmon.jpg",  # Cambiado: imagen en directorio raíz
         "preparacion": [
             "Cortar el aguacate y mezclarlo con el queso cottage en un bol",
             "Añadimos un poco de wasabi y un toque de salsa de soja",
@@ -190,6 +190,18 @@ RECETAS = {
         ]
     }
 }
+
+
+# Función para cargar imágenes con manejo de errores
+def cargar_imagen(nombre_archivo):
+    try:
+        return Image.open(nombre_archivo)
+    except Exception as e:
+        st.error(f"No se pudo cargar la imagen: {nombre_archivo}")
+        st.error(f"Error: {str(e)}")
+        return None
+
+
 # ------------------------------------------------------------------------------------------------
 # --- INTERFAZ PRINCIPAL ---
 st.markdown('<div class="centered-content">', unsafe_allow_html=True)
@@ -294,25 +306,28 @@ if st.button("🔍 Buscar receta", type="primary"):
                 </div>
                 """, unsafe_allow_html=True)
 
-                # Imagen con estilo personalizado
-                st.markdown("""
-                <style>
-                    div[data-testid="stImage"] {
-                        margin: -50px auto 0 auto !important;
-                        max-width: 90% !important;
-                        border: 1px solid #eee !important;
-                        padding: 10px !important;
-                        background: white !important;
-                        box-shadow: 0 4px 8px rgba(0,0,0,0.1) !important;
-                    }
-                    div[data-testid="stImage"] > img {
-                        max-height: 300px !important;
-                        object-fit: cover !important;
-                    }
-                </style>
-                """, unsafe_allow_html=True)
+                # Cargar imagen con manejo de errores
+                imagen = cargar_imagen(receta["imagen"])
+                if imagen:
+                    # Imagen con estilo personalizado
+                    st.markdown("""
+                    <style>
+                        div[data-testid="stImage"] {
+                            margin: -50px auto 0 auto !important;
+                            max-width: 90% !important;
+                            border: 1px solid #eee !important;
+                            padding: 10px !important;
+                            background: white !important;
+                            box-shadow: 0 4px 8px rgba(0,0,0,0.1) !important;
+                        }
+                        div[data-testid="stImage"] > img {
+                            max-height: 300px !important;
+                            object-fit: cover !important;
+                        }
+                    </style>
+                    """, unsafe_allow_html=True)
 
-                st.image(receta["imagen"], use_container_width=True)
+                    st.image(imagen, use_container_width=True)
 
             # Recuadro 1: Tiempo
             st.markdown(f"""
@@ -362,7 +377,6 @@ with st.expander("📚 Recetario completo", expanded=False):
         st.session_state.opcion_anterior = opcion
         st.session_state.autocompletar = True
         st.rerun()
-
 
 # -----FOOTER------------------------------------------------------------------------------------
 st.markdown("---")
