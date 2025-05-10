@@ -40,7 +40,7 @@ st.markdown("""
         max-width: 800px;
         text-align: center;
     }
-    
+
     /* Ocultar elementos de Streamlit */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
@@ -87,7 +87,7 @@ st.markdown("""
         margin-top: 15px;
         padding: 0 10px;
     }
-    
+
     /* Estilos para los recuadros */
     .recipe-box {
         background: white;
@@ -98,16 +98,23 @@ st.markdown("""
         width: 100%;
         max-width: 700px;
         box-sizing: border-box;
-        overflow: hidden;
+        overflow: visible; /* Cambiado de hidden a visible */
+        display: block;
     }
-    
+
     /* Caja de tiempo */
     .time-box {
         text-align: center;
         background-color: #f0f7ff;
         border-left: 5px solid #4a8cff;
     }
-    
+    .time-box p {
+        display: block;
+        width: 100%;
+        font-size: 24px;
+        text-align: center;
+    }
+
     /* Caja de ingredientes */
     .ingredients-box {
         text-align: center;
@@ -122,13 +129,15 @@ st.markdown("""
         width: 100%;
         box-sizing: border-box;
         list-style-position: outside;
+        list-style-type: disc; /* Agregado para asegurar que se muestren viñetas */
     }
     .ingredients-box li {
         margin-bottom: 5px;
         padding-left: 5px;
         text-align: left;
+        display: list-item !important; /* Forzar visualización como elemento de lista */
     }
-    
+
     /* Caja de pasos */
     .steps-box {
         text-align: center;
@@ -143,25 +152,28 @@ st.markdown("""
         width: 100%;
         box-sizing: border-box;
         list-style-position: outside;
+        list-style-type: decimal; /* Agregado para asegurar que se muestren números */
     }
     .steps-box li {
         margin-bottom: 8px;
         padding-left: 5px;
         text-align: left;
+        display: list-item !important; /* Forzar visualización como elemento de lista */
     }
-    
+
     /* Títulos dentro de los recuadros */
     .recipe-box h3 {
         text-align: center;
         margin: 0 auto 1rem auto;
+        display: block;
     }
-    
+
     /* Elementos de selección y slider */
     .stMultiSelect, .stSlider {
         margin: 0 auto !important;
         max-width: 100%;
     }
-    
+
     /* Imágenes responsive */
     div[data-testid="stImage"] {
         margin: -50px auto 0 auto !important;
@@ -176,54 +188,73 @@ st.markdown("""
         width: 100%;
         object-fit: cover !important;
     }
-    
+
     /* Media queries para responsive design */
     @media (max-width: 768px) {
         .recipe-box {
             padding: 10px;
             margin: 15px auto;
+            overflow: visible; /* Agregado para asegurar que el contenido sea visible */
+            display: block;
         }
-        
+
         .polaroid-frame {
             padding: 10px 10px 30px 10px;
         }
-        
+
         .polaroid-caption {
             font-size: 1.2em;
         }
-        
+
         .ingredients-box ul, .steps-box ol {
             padding-left: 15px;
             display: block;
             width: 90%;
+            list-style-position: outside;
         }
-        
+
         .ingredients-box li, .steps-box li {
             margin-bottom: 5px;
+            display: list-item !important; /* Forzar visualización como elemento de lista */
         }
-        
+
         div[data-testid="stImage"] {
             margin: -40px auto 0 auto !important;
         }
-        
+
         div[data-testid="stImage"] > img {
             max-height: 200px !important;
         }
     }
-    
+
     /* Media queries para pantallas muy pequeñas */
     @media (max-width: 480px) {
         .recipe-box {
             padding: 8px;
+            overflow: visible; /* Agregado para asegurar que el contenido sea visible */
+            display: block;
         }
-        
+
         h3 {
             font-size: 1.1em;
+            display: block;
         }
-        
+
         .ingredients-box ul, .steps-box ol {
             padding-left: 12px;
             width: 95%;
+            display: block !important;
+            list-style-position: outside;
+        }
+
+        .ingredients-box li, .steps-box li {
+            display: list-item !important; /* Forzar visualización como elemento de lista */
+            margin-bottom: 5px;
+        }
+
+        .time-box p {
+            display: block;
+            font-size: 20px;
         }
     }
 </style>
